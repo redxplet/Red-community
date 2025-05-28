@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تسجيل الدخول - Redxplet</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #1f1f1f;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 320px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+    }
+    h2 {
+      text-align: center;
+      color: #ff3b3b;
+      margin-bottom: 1rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #ff3b3b;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #ff1a1a;
+    }
+    .signup-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .signup-link a {
+      color: #ff3b3b;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>تسجيل الدخول</h2>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" required />
+    <input type="password" id="password" placeholder="كلمة المرور" required />
+    <button id="loginBtn">دخول</button>
+    <p class="signup-link">ليس لديك حساب؟ <a href="signup.html">إنشاء حساب</a></p>
+  </div>
+
+  <script type="module">
+    // Import Firebase functions
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+    // Your Firebase config (استبدلها بمعلوماتك)
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8etiRrlhWUUHWW1ksRkeVtGP6_tRkBS0",
+      authDomain: "red-community.firebaseapp.com",
+      projectId: "red-community",
+      storageBucket: "red-community.firebasestorage.app",
+      messagingSenderId: "298815913579",
+      appId: "1:298815913579:web:85e7fde34f3ed11c99fb2e",
+      measurementId: "G-VH8VSVM8BP"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // تسجيل الدخول
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        alert('تم تسجيل الدخول بنجاح!');
+        // توجه للصفحة الرئيسية أو صفحة المجتمع
+        window.location.href = 'community.html';
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
