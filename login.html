@@ -2,29 +2,32 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>تسجيل الدخول - Redxplet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تسجيل الدخول | Redxplet</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
+      background-color: #0e0e0e;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
-      color: #eee;
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
     .container {
-      background: #1f1f1f;
-      padding: 2rem;
-      border-radius: 8px;
-      width: 320px;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+      background-color: #1e1e1e;
+      padding: 2.5rem;
+      border-radius: 10px;
+      width: 350px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+      position: relative;
     }
     h2 {
       text-align: center;
-      color: #ff3b3b;
-      margin-bottom: 1rem;
+      color: #ff4040;
+      margin-bottom: 2rem;
     }
     input {
       width: 100%;
@@ -33,46 +36,92 @@
       border: none;
       border-radius: 5px;
       font-size: 1rem;
+      background-color: #2a2a2a;
+      color: white;
+    }
+    .password-wrapper {
+      position: relative;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ccc;
     }
     button {
       width: 100%;
       padding: 0.75rem;
-      background: #ff3b3b;
+      background-color: #ff4040;
       border: none;
       border-radius: 5px;
       color: white;
-      font-weight: bold;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
     }
     button:hover {
-      background: #ff1a1a;
+      background-color: #e60000;
     }
-    .signup-link {
+    .signup-link, .forgot-link {
       text-align: center;
       margin-top: 1rem;
+      font-size: 0.9rem;
     }
-    .signup-link a {
-      color: #ff3b3b;
+    .signup-link a, .forgot-link a {
+      color: #ff4040;
       text-decoration: none;
+    }
+    .loader {
+      display: none;
+      margin: auto;
+      margin-bottom: 1rem;
+      border: 4px solid #444;
+      border-top: 4px solid #ff4040;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .alert {
+      background-color: #ff1a1a;
+      padding: 0.5rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      text-align: center;
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>تسجيل الدخول</h2>
+    <div class="alert" id="alertBox"></div>
+    <div class="loader" id="loader"></div>
+
     <input type="email" id="email" placeholder="البريد الإلكتروني" required />
-    <input type="password" id="password" placeholder="كلمة المرور" required />
+
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="كلمة المرور" required />
+      <span class="toggle-password" onclick="togglePassword()">👁️</span>
+    </div>
+
     <button id="loginBtn">دخول</button>
+
+    <p class="forgot-link"><a href="#">نسيت كلمة المرور؟</a></p>
     <p class="signup-link">ليس لديك حساب؟ <a href="signup.html">إنشاء حساب</a></p>
   </div>
 
+  <!-- Firebase Script -->
   <script type="module">
-    // Import Firebase functions
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-    // Your Firebase config (استبدلها بمعلوماتك)
     const firebaseConfig = {
       apiKey: "AIzaSyD8etiRrlhWUUHWW1ksRkeVtGP6_tRkBS0",
       authDomain: "red-community.firebaseapp.com",
@@ -83,24 +132,66 @@
       measurementId: "G-VH8VSVM8BP"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // تسجيل الدخول
-    document.getElementById('loginBtn').addEventListener('click', async () => {
+    // Check if user already logged in
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        window.location.href = "community.html";
+      }
+    });
+
+    const loginBtn = document.getElementById('loginBtn');
+    const loader = document.getElementById('loader');
+    const alertBox = document.getElementById('alertBox');
+
+    loginBtn.addEventListener('click', async () => {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
+      if (!email || !password) {
+        showAlert("يرجى إدخال البريد وكلمة المرور.");
+        return;
+      }
+
+      loader.style.display = "block";
+      alertBox.style.display = "none";
+
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        alert('تم تسجيل الدخول بنجاح!');
-        // توجه للصفحة الرئيسية أو صفحة المجتمع
-        window.location.href = 'community.html';
+        await signInWithEmailAndPassword(auth, email, password);
+        loader.style.display = "none";
+        window.location.href = "community.html";
       } catch (error) {
-        alert('خطأ: ' + error.message);
+        loader.style.display = "none";
+        showAlert(translateError(error.code));
       }
     });
+
+    function togglePassword() {
+      const passField = document.getElementById('password');
+      passField.type = passField.type === 'password' ? 'text' : 'password';
+    }
+
+    function showAlert(message) {
+      alertBox.innerText = message;
+      alertBox.style.display = "block";
+    }
+
+    function translateError(code) {
+      switch (code) {
+        case 'auth/user-not-found':
+          return 'لا يوجد حساب بهذا البريد.';
+        case 'auth/wrong-password':
+          return 'كلمة المرور غير صحيحة.';
+        case 'auth/invalid-email':
+          return 'البريد الإلكتروني غير صالح.';
+        case 'auth/too-many-requests':
+          return 'محاولات كثيرة. أعد المحاولة لاحقاً.';
+        default:
+          return 'حدث خطأ. حاول مرة أخرى.';
+      }
+    }
   </script>
 </body>
 </html>
