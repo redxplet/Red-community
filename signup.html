@@ -22,7 +22,6 @@
       border-radius: 10px;
       width: 350px;
       box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-      position: relative;
     }
     h2 {
       text-align: center;
@@ -60,6 +59,7 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s;
+      margin-top: 0.5rem;
     }
     button:hover {
       background-color: #e60000;
@@ -69,9 +69,15 @@
       margin-top: 1rem;
       font-size: 0.9rem;
     }
-    .login-link a {
+    .login-link button {
+      margin-top: 0.5rem;
+      background-color: transparent;
+      border: 1px solid #ff4040;
       color: #ff4040;
-      text-decoration: none;
+    }
+    .login-link button:hover {
+      background-color: #ff4040;
+      color: white;
     }
     .loader {
       display: none;
@@ -113,7 +119,10 @@
 
     <button id="signupBtn">إنشاء الحساب</button>
 
-    <p class="login-link">لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
+    <div class="login-link">
+      <p>هل لديك حساب؟</p>
+      <button onclick="window.location.href='login.html'">تسجيل الدخول</button>
+    </div>
   </div>
 
   <!-- Firebase Script -->
