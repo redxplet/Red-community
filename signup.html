@@ -1,138 +1,143 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>إنشاء حساب | Redxplet</title>
+  <title>مجتمع Redxplet</title>
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1f22;
+      color: #dcddde;
       margin: 0;
-      padding: 0;
-      background-color: #0e0e0e;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background-color: #1e1e1e;
-      padding: 2.5rem;
-      border-radius: 10px;
-      width: 350px;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-    }
-    h2 {
-      text-align: center;
-      color: #ff4040;
-      margin-bottom: 2rem;
-    }
-    input {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      background-color: #2a2a2a;
-      color: white;
-    }
-    .password-wrapper {
-      position: relative;
-    }
-    .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      color: #ccc;
-    }
-    button {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #ff4040;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: 0.5rem;
-    }
-    button:hover {
-      background-color: #e60000;
-    }
-    .login-link {
-      text-align: center;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-    .login-link button {
-      margin-top: 0.5rem;
-      background-color: transparent;
-      border: 1px solid #ff4040;
-      color: #ff4040;
-    }
-    .login-link button:hover {
-      background-color: #ff4040;
-      color: white;
-    }
-    .loader {
-      display: none;
-      margin: auto;
-      margin-bottom: 1rem;
-      border: 4px solid #444;
-      border-top: 4px solid #ff4040;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .alert {
-      background-color: #ff1a1a;
-      padding: 0.5rem;
-      border-radius: 5px;
-      margin-bottom: 1rem;
-      text-align: center;
-      display: none;
-    }
+      padding: 20px;
+      direction: rtl;
+    }h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.post-form, .post {
+  background-color: #2f3136;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease-in-out;
+}
+
+.post:hover {
+  transform: scale(1.01);
+}
+
+input[type="text"], textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: #40444b;
+  color: white;
+  resize: vertical;
+}
+
+input[type="file"] {
+  margin-bottom: 15px;
+  color: white;
+}
+
+button {
+  background-color: #5865f2;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4752c4;
+}
+
+.post img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  border: 1px solid #555;
+}
+
+.reply-section {
+  margin-top: 15px;
+  background: #232428;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.reply {
+  background: #4f545c;
+  padding: 6px 12px;
+  border-radius: 10px;
+  margin-bottom: 7px;
+  color: #dcddde;
+  font-size: 14px;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.username {
+  font-weight: bold;
+  color: #00b0f4;
+}
+
+.divider {
+  height: 1px;
+  background-color: #40444b;
+  margin: 15px 0;
+}
+
+::placeholder {
+  color: #999;
+}
+
+.post-form label {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  margin-top: 40px;
+  font-style: italic;
+}
+
   </style>
 </head>
-<body>
-  <div class="container">
-    <h2>إنشاء حساب جديد</h2>
-    <div class="alert" id="alertBox"></div>
-    <div class="loader" id="loader"></div>
+<body>  <h1>مجتمع Redxplet</h1>  <div class="post-form">
+    <label>اسم المستخدم:</label>
+    <input type="text" id="username" placeholder="اسمك" /><label>نص المنشور:</label>
+<textarea id="postText" rows="4" placeholder="بم تفكر؟"></textarea>
 
-    <input type="email" id="email" placeholder="البريد الإلكتروني" required />
+<label>إضافة صورة (اختياري):</label>
+<input type="file" id="imageUpload" accept="image/*" />
 
-    <div class="password-wrapper">
-      <input type="password" id="password" placeholder="كلمة المرور" required />
-      <span class="toggle-password" onclick="togglePassword()">👁️</span>
-    </div>
+<button onclick="addPost()">نشر</button>
 
-    <button id="signupBtn">إنشاء الحساب</button>
-
-    <div class="login-link">
-      <p>هل لديك حساب؟</p>
-      <button onclick="window.location.href='login.html'">تسجيل الدخول</button>
-    </div>
-  </div>
-
-  <!-- Firebase Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+  </div>  <div id="posts"></div>  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getDatabase, ref, push, onValue, set, get } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD8etiRrlhWUUHWW1ksRkeVtGP6_tRkBS0",
       authDomain: "red-community.firebaseapp.com",
+      databaseURL: "https://red-community-default-rtdb.europe-west1.firebaseddatabase.app",
       projectId: "red-community",
       storageBucket: "red-community.firebasestorage.app",
       messagingSenderId: "298815913579",
@@ -141,56 +146,88 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    const db = getDatabase(app);
 
-    const signupBtn = document.getElementById('signupBtn');
-    const loader = document.getElementById('loader');
-    const alertBox = document.getElementById('alertBox');
+    function addPost() {
+      const username = document.getElementById('username').value.trim();
+      const text = document.getElementById('postText').value.trim();
+      const imageInput = document.getElementById('imageUpload');
+      const reader = new FileReader();
 
-    signupBtn.addEventListener('click', async () => {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      if (!email || !password) {
-        showAlert("يرجى إدخال البريد وكلمة المرور.");
+      if (!username || !text) {
+        alert("الرجاء ملء الاسم والنص");
         return;
       }
 
-      loader.style.display = "block";
-      alertBox.style.display = "none";
+      const post = {
+        username,
+        text,
+        image: "",
+        replies: [],
+        timestamp: new Date().toLocaleString()
+      };
 
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        loader.style.display = "none";
-        window.location.href = "community.html";
-      } catch (error) {
-        loader.style.display = "none";
-        showAlert(translateError(error.code));
+      if (imageInput.files[0]) {
+        reader.onload = function (e) {
+          post.image = e.target.result;
+          push(ref(db, "posts"), post);
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        push(ref(db, "posts"), post);
       }
+
+      document.getElementById('username').value = "";
+      document.getElementById('postText').value = "";
+      document.getElementById('imageUpload').value = "";
+    }
+
+    window.addPost = addPost;
+
+    function renderPosts(data) {
+      const container = document.getElementById('posts');
+      container.innerHTML = "";
+      if (!data) {
+        container.innerHTML = '<div class="empty">لا توجد منشورات بعد...</div>';
+        return;
+      }
+
+      const keys = Object.keys(data).reverse();
+      keys.forEach(key => {
+        const post = data[key];
+        const postDiv = document.createElement('div');
+        postDiv.className = "post";
+        postDiv.innerHTML = `
+          <div class="username">${post.username}</div>
+          <p>${post.text}</p>
+          ${post.image ? `<img src="${post.image}" alt="post image" />` : ''}
+          <div class="timestamp">${post.timestamp}</div>
+          <div class="divider"></div>
+          <div class="reply-section">
+            <input type="text" placeholder="أضف ردك" onkeydown="if(event.key==='Enter'){addReply('${key}', this)}" />
+            <div>${(post.replies || []).map(r => `<div class="reply">${r}</div>`).join('')}</div>
+          </div>
+        `;
+        container.appendChild(postDiv);
+      });
+    }
+
+    const postsRef = ref(db, "posts");
+    onValue(postsRef, (snapshot) => {
+      const data = snapshot.val();
+      renderPosts(data);
     });
 
-    function togglePassword() {
-      const passField = document.getElementById('password');
-      passField.type = passField.type === 'password' ? 'text' : 'password';
-    }
+    window.addReply = async function (postKey, input) {
+      const reply = input.value.trim();
+      if (!reply) return;
 
-    function showAlert(message) {
-      alertBox.innerText = message;
-      alertBox.style.display = "block";
+      const postRef = ref(db, `posts/${postKey}/replies`);
+      const snapshot = await get(postRef);
+      const replies = snapshot.exists() ? snapshot.val() : [];
+      replies.push(reply);
+      await set(postRef, replies);
+      input.value = "";
     }
-
-    function translateError(code) {
-      switch (code) {
-        case 'auth/email-already-in-use':
-          return 'هذا البريد مستخدم بالفعل.';
-        case 'auth/invalid-email':
-          return 'البريد الإلكتروني غير صالح.';
-        case 'auth/weak-password':
-          return 'كلمة المرور ضعيفة (يجب أن تكون 6 أحرف على الأقل).';
-        default:
-          return 'حدث خطأ أثناء التسجيل.';
-      }
-    }
-  </script>
-</body>
+  </script></body>
 </html>
